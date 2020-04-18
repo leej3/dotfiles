@@ -2,7 +2,7 @@
 
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
-
+alias vim=`which nvim`
 # Vanilla MacOS has a different `ls` for which we use -G instead of --color.
 # However if you've conda-installed coreutils, that `ls` will be used.
 #
@@ -25,3 +25,4 @@ alias D="export DISPLAY=:0"
 
 # View syntax-highlighted files in the current directory, live-filtered by fzf.
 alias v='fzf --preview "bat --color \"always\" {}"'
+alias "vim=nvim"
