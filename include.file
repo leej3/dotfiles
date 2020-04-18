@@ -10,3 +10,5 @@
 .tmux.conf
 .vim/
 .vimrc
+include.file
+.extra
