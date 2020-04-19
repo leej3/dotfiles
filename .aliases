@@ -26,3 +26,59 @@ alias D="export DISPLAY=:0"
 # View syntax-highlighted files in the current directory, live-filtered by fzf.
 alias v='fzf --preview "bat --color \"always\" {}"'
 alias "vim=nvim"
+
+
+
+
+
+
+####### John aliases
+
+alias vb="vim ~/.bashrc"
+alias sb="source ~/.bashrc"
+alias d="ssh dsmlgpu.nimh.nih.gov"
+
+alias docker_clean_ps='docker rm $(docker ps --filter=status=exited --filter=status=created -q)'
+alias docker_clean_images='docker rmi $(docker images -a --filter=dangling=true -q)'
+alias dockclean='docker_clean_images;docker_clean_ps    '
+
+
+alias recent="ls -lrt | tail"
+alias grepblame='~/configs/grepblame.sh'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+alias stop_notebook_filter="mv ~/configs/.gitattributes_global ~/configs/.gitatt_backup"
+alias restore_notebook_filter="mv ~/configs/.gitatt_backup ~/configs/.gitattributes_global"
+alias vb="vim ~/.bashrc"
+alias vba="vim ~/.bash_aliases"
+alias sb="source ~/.bashrc"
+alias d="ssh -Y technetium"
+alias r="ssh -Y radium"
+alias f="ssh -Y felix"
+alias h="ssh -Y helix"
+alias p="ssh -Y promethium"
+alias b="ssh -Y biowulf"
+alias gs="git status"
+alias gc="git commit -m"
+alias ga="git add"
+alias gac="git commit -am"
+alias gd="git diff HEAD"
+alias gdc="git diff HEAD --cached"
+alias gl="git log"
+alias glo="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias gch="git checkout"
+alias gr="git reset"
+alias grs="git reset --soft"
+alias grh="git reset --hard"
+alias gps="git push"
+alias gpl="git pull"
+alias grv="git remote -v"
+alias gba="git branch -a"
+alias dockclean='docker_clean_images;docker_clean_ps    '
+alias docker_clean_ps='docker rm $(docker ps --filter=status=exited --filter=status=created -q)'
+alias docker_clean_images='docker rmi $(docker images -a --filter=dangling=true -q)'
+
+
