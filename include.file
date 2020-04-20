@@ -12,3 +12,7 @@
 .vimrc
 include.file
 .extra
+.extras
+.gitconfig
+.gitattributes_global
+.git-completion.bash
