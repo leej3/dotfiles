@@ -21,3 +21,8 @@ export MANPAGER='less -X';
 if [[ $OSTYPE == darwin* ]]; then
     export SHELL=/bin/bash
 fi
+
+
+
+### John exports
+export DOTFILES_FORCE=true
