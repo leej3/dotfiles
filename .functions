@@ -34,3 +34,15 @@ sa() {
     eval "source activate $env";
 }
 
+
+
+### John functions
+hh(){
+    tail -n 1000 ~/.bash_eternal_history|fzf
+}
+hhf(){
+    cat ~/.bash_eternal_history|fzf
+}
+hhd(){
+       hh $1 | gawk '{ printf strftime("%c", $4); for (i=2; i<NF; i++) printf $i " "; print $NF }'
+}
