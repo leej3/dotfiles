@@ -1,4 +1,3 @@
 coreutils
-dircolors
 git
 tmux
