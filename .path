@@ -1,3 +1,8 @@
 export PATH=$PATH:$HOME/opt/bin
 export PATH="/home/lee/opt/neovim/bin:$PATH"
 export PATH=$PATH:$HOME/miniconda3/bin
+
+
+### john paths
+export PATH="$PATH:/usr/local/bin:/usr/local/opt/ruby/bin:/usr/local/lib/ruby/gems/2.6.0/bin"
+
