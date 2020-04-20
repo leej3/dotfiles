@@ -3,6 +3,8 @@ call plug#begin()
 " Note: where shortcuts are indicated, they're probably set below in the
 " PLUGIN SETTINGS section.
 "
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'vim-scripts/vis'                    " Operations in visual block mode respect selection
 Plug 'scrooloose/nerdcommenter'           " Comment large blocks of text
 Plug 'scrooloose/nerdtree'                " File browser for vim <Leader>n
