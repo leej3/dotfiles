@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 alias grep='grep --color=auto'
-alias ls='ls --color=auto'
 alias vim=`which nvim`
 # Vanilla MacOS has a different `ls` for which we use -G instead of --color.
 # However if you've conda-installed coreutils, that `ls` will be used.
@@ -9,9 +8,9 @@ alias vim=`which nvim`
 # So the following sets the color differently if we're on Mac and not using
 # coreutils from conda.
 if [[ $OSTYPE == darwin* ]]; then
-    if which ls | grep -q "/usr/bin"; then
         alias ls='ls -G'
-    fi
+else
+    alias ls='ls --color=auto'
 fi
 
 alias ll='ls -lrth'
