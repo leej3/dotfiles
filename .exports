@@ -26,3 +26,4 @@ fi
 
 ### John exports
 export DOTFILES_FORCE=true
+export HISTTIMEFORMAT="%s "
