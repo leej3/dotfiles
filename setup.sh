@@ -186,6 +186,24 @@ install_env_and_symlink () {
     check_opt_bin_in_path
 }
 
+install_env_and_symlinks () {
+    ENVNAME="$1"
+    CONDAPKG="$2"
+    shift
+    shift
+    local EXECUTABLES=("$@") # Rebuild the array with rest of arguments
+
+    can_make_conda_env $ENVNAME
+    conda create -n $ENVNAME $CONDAPKG
+
+    for EXECUTABLE in "${EXECUTABLES[@]}";do
+      ln -sf "$CONDA_LOCATION/envs/$ENVNAME/bin/$EXECUTABLE" $HOME/opt/bin/$EXECUTABLE
+      printf "${YELLOW}Installed $HOME/opt/bin/$EXECUTABLE${UNSET}\n"
+    done
+
+    check_opt_bin_in_path
+}
+
 # TASKS ----------------------------------------------------------------------
 #
 # Each task asks if it's OK to run; that also serves as documentation for each
