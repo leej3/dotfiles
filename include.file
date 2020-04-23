@@ -16,3 +16,5 @@ include.file
 .gitconfig
 .gitattributes_global
 .git-completion.bash
+.pdbrc
+.pdbrc.py
