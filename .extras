@@ -3,7 +3,7 @@ if [ `uname` = "Darwin" ]; then
     if [ -f $(brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion
     fi
-    export EDITOR=/Users/rodgersleejg/.mysubl
+#    export EDITOR=/Users/rodgersleejg/.mysubl
 
 ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=1
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
