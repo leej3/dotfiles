@@ -607,6 +607,12 @@ elif [ $task == "--install-datalad" ]; then
     printf "${YELLOW}Installed to ~/opt/bin/datalad${UNSET}\n"
     check_opt_bin_in_path
 
+elif [ $task == "--install-htop" ]; then
+    ok "Install htop  into a new conda env and create symlinks in ~/opt/bin"
+    install_env_and_symlink htop htop htop 
+    printf "${YELLOW}Installed to ~/opt/bin/htop${UNSET}\n"
+    check_opt_bin_in_path
+
 
 # ----------------------------------------------------------------------------
 # Diffs section
