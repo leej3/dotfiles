@@ -600,6 +600,12 @@ elif [ $task == "--install-pyp" ]; then
     pip install pypyp
     ln -s $(which pyp) $HOME/opt/bin/pyp
     source deactivate
+elif [ $task == "--install-datalad" ]; then
+    ok "Install datalad,git-annex and git  into a new conda env and create symlinks in ~/opt/bin"
+    desired_symlinks=("git" "git-annex" "datalad")
+    install_env_and_symlinks datalad datalad "${desired_symlinks[@]}"
+    printf "${YELLOW}Installed to ~/opt/bin/datalad${UNSET}\n"
+    check_opt_bin_in_path
 
 
 # ----------------------------------------------------------------------------
