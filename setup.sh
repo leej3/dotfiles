@@ -618,12 +618,12 @@ elif [ $task == "--install-htop" ]; then
 # Diffs section
 
 elif [ $task == "--diffs" ]; then
-    command -v ~/opt/bin/icdiff >/dev/null 2>&1 || {
+    command -v icdiff >/dev/null 2>&1 || {
         printf "${RED}Can't find icdiff. Did you run ./setup.sh --install-icdiff?, and is ~/opt/bin on your \$PATH?${UNSET}\n"
             exit 1;
         }
     ok "Shows the diffs between this repo and what's in your home directory"
-    cmd="$HOME/opt/bin/icdiff --recursive --line-numbers"
+    cmd="icdiff --recursive --line-numbers"
     $cmd ~ . | grep -v "Only in $HOME" | sed "s|$cmd||g"
 
 elif [ $task == "--graphical-diffs" ]; then
