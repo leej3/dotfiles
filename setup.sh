@@ -14,13 +14,14 @@ function showHelp() {
     echo
     echo "Usage:"
     echo "   $0 [OPTION]"
+    echo 
+    printf "   ${RED}Documenation: https://daler.github.io/dotfiles/${UNSET}\n"
     echo
-    echo "Options are intended to be run one-at-a-time. They are listed here in "
-    echo "Each command will prompt if you want to continue."
-    echo "Set the env var DOTFILES_FORCE=true if you want always say yes."
-    echo
-    echo "Many commands are OK to run on remote machines on which you do not "
-    echo "have root access. These commands are marked 'remote OK'"
+    echo " - Options are intended to be run one-at-a-time."
+    echo " - Each command will prompt if you want to continue."
+    echo " - Set the env var DOTFILES_FORCE=true if you want always say yes."
+    echo " - Many commands are OK to run on remote machines on which you do not "
+    echo "   have root access. These commands are marked 'remote OK'"
     echo
     printf "${GREEN}                       remote  Linux  Mac${UNSET} \n"
     printf "${GREEN}                        OK_____ | ___|   ${UNSET} \n"
@@ -53,16 +54,15 @@ function showHelp() {
     printf "  ${GREEN} --install-fd               |x|x|x|  ${UNSET}${BLUE}https://github.com/sharkdp/fd${UNSET}\n"
     printf "  ${GREEN} --install-jq               |x|x|x|  ${UNSET}${BLUE}https://stedolan.github.io/jq/${UNSET}\n"
     printf "  ${GREEN} --install-vd               |x|x|x|  ${UNSET}${BLUE}https://visidata.org/${UNSET}\n"
+    printf "  ${GREEN} --install-tig              |x|x|x|  ${UNSET}${BLUE}https://jonas.github.io/tig/${UNSET}\n"
+    printf "  ${GREEN} --install-pyp              |x|x|x|  ${UNSET}${BLUE}https://github.com/hauntsaninja/pyp${UNSET}\n"
     printf "  ${GREEN} --install-black            |x|x|x|  ${UNSET}${BLUE}https://black.readthedocs.io${UNSET}\n"
     printf "  ${GREEN} --install-radian           |x|x|x|  ${UNSET}${BLUE}https://github.com/randy3k/radian${UNSET}\n"
     printf "  ${GREEN} --install-git-cola         |x|x|x|  ${UNSET}${BLUE}https://git-cola.github.io/${UNSET}\n"
-    printf "  ${GREEN} --install-bat              |x|x|x|  ${UNSET}${BLUE}https://git-cola.github.io/${UNSET}\n"
+    printf "  ${GREEN} --install-bat              |x|x|x|  ${UNSET}${BLUE}https://github.com/sharkdp/bat${UNSET}\n"
     printf "  ${GREEN} --install-alacritty        | |x|x|  ${UNSET}${BLUE}https://github.com/alacritty/alacritty${UNSET}\n"
     printf "  ${GREEN} --install-docker           | |x| |  ${UNSET}install docker and add current user to new docker group\n"
     echo
-    echo
-    echo "paths to miniconda and neovim will be prepended to PATH in the"
-    echo "~/.path file; that file will then be sourced"
     echo
     exit 0
 }
@@ -243,16 +243,36 @@ elif [ $task == "--install-docker" ]; then
     echo "Please log out and then log back in again to be able to use docker as $USER instead of root"
 
 elif [ $task == "--install-miniconda" ]; then
-    ok "Installs Miniconda to $HOME/miniconda3/bin and then add $HOME/miniconda3/bin to the
-    \$PATH by adding it to the end of ~/.path, and then source ~/.path"
+
+    # On Biowulf/Helix, if we install into $HOME then the installation might
+    # larger than the quota for the home directory. Instead, install to user's
+    # data directory which has much more space.
+    MINICONDA_DIR=$HOME/miniconda3
+    if [[ $HOSTNAME == "helix.nih.gov" ]]; then
+        MINICONDA_DIR=/data/$USER/miniconda3-test
+    fi
+    if [[ $HOSTNAME == "biowulf.nih.gov" ]]; then
+        MINICONDA_DIR=/data/$USER/miniconda3-test
+    fi
+
+    ok "Installs Miniconda
+       - installs to $MINICONDA_DIR
+       - adds $MINICONDA_DIR/bin to the end of ~/.path
+       - sources ~/.path
+    "
     if [[ $OSTYPE == darwin* ]]; then
         download https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh miniconda.sh
     else
         download https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh miniconda.sh
     fi
-    bash miniconda.sh -b
-    add_line_to_file "export PATH=\"\$PATH:$HOME/miniconda3/bin\"" ~/.path
+
+    set -x
+    bash miniconda.sh -b -p $MINICONDA_DIR
+    add_line_to_file "export PATH=\"\$PATH:$MINICONDA_DIR/bin\"" ~/.path
     source ~/.path
+    printf "${YELLOW}Miniconda installed to $MINICONDA_DIR, added to ~/.path, and sourced ~/.path.${UNSET}\n"
+    printf "${YELLOW}If you're not using ~/.path, please add the following to your .bashrc:${UNSET}\n"
+    printf "${YELLOW}   export PATH=\"\$PATH:$MINICONDA_DIR${UNSET}\"\n"
 
 elif [ $task == "--set-up-bioconda" ]; then
     ok "Sets up Bioconda by adding the dependent channels in the correct order"
@@ -325,7 +345,7 @@ elif [ $task == "--install-meld" ]; then
     else
         echo
         printf "${RED}--install-meld currently only supported on Mac.\n"
-        printf "Use --apt-installs on Linux or '/usr/bin/python /usr/bin/meld' on Biowulf\n${UNSET}"
+        printf "Use --apt-installs on Linux or '/usr/bin/python /usr/bin/meld' on Biowulf${UNSET}\n"
     fi
 
 elif [ $task == "--install-fzf" ]; then
@@ -387,7 +407,7 @@ elif [ $task == "--install-hub" ]; then
             cd /tmp
             tar -xf hub.tar.gz
             cd hub-darwin-amd64-${HUB_VERSION}
-            prefix=$HOME/opt ./install
+            prefix=$HOME/opt bash install
         )
     else
         (
@@ -395,7 +415,7 @@ elif [ $task == "--install-hub" ]; then
             cd /tmp
             tar -xf hub.tar.gz
             cd hub-linux-amd64-${HUB_VERSION}
-            prefix=$HOME/opt ./install
+            prefix=$HOME/opt bash install
         )
     fi
     printf "${YELLOW}Installed to ~/opt/bin/hub${UNSET}\n"
@@ -492,12 +512,41 @@ elif [ $task == "--install-jq" ]; then
     ok "Installs jq to $HOME/opt/bin"
     if [[ $OSTYPE == darwin* ]]; then
         download https://github.com/stedolan/jq/releases/download/jq-1.6/jq-osx-amd64 $HOME/opt/bin/jq
-else
+    else
         download https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 $HOME/opt/bin/jq
-fi
+    fi
     chmod +x $HOME/opt/bin/jq
     printf "${YELLOW}Installed to ~/opt/bin/jq${UNSET}\n"
     check_opt_bin_in_path
+
+elif [ $task == "--install-tig" ]; then
+    ok "Installs tig to $HOME/opt/bin"
+
+    if [[ $HOSTNAME == "helix.nih.gov" ]]; then
+        printf "${RED}Cannot install on helix -- need ncurses, which is in the gcc module, which needs to be loaded on biowulf.\n\n${UNSET}"
+        exit 1
+    fi
+    if [[ $HOSTNAME == "biowulf.nih.gov" ]]; then
+        printf "${YELLOW}Loading gcc module to get ncurses...${UNSET}\n"
+        module load gcc
+    fi
+
+    TIG_VERSION=2.3.3
+    mkdir -p $HOME/.tig-install
+    (
+        cd $HOME/.tig-install
+        download https://github.com/jonas/tig/releases/download/tig-${TIG_VERSION}/tig-${TIG_VERSION}.tar.gz tig.tar.gz
+        tar -xf tig.tar.gz
+        cd tig-${TIG_VERSION}
+        make prefix=$HOME/opt
+        make install prefix=$HOME/opt
+    )
+
+    if [[ $HOSTNAME == "biowulf" ]]; then
+        printf "${YELLOW}Unloading gcc module...${UNSET}\n"
+        module unload gcc
+    fi
+
 
 elif [ $task == "--dotfiles" ]; then
 
@@ -543,6 +592,14 @@ elif [ $task == "--install-icdiff" ]; then
     printf "${YELLOW}Installed to ~/opt/bin/icdiff${UNSET}\n"
     check_opt_bin_in_path
 
+elif [ $task == "--install-pyp" ]; then
+    ok "Install pyp (https://github.com/hauntsaninja/pyp) into ~/opt/bin"
+    can_make_conda_env "pyp"
+    conda create -y -n pyp python
+    source activate pyp
+    pip install pypyp
+    ln -s $(which pyp) $HOME/opt/bin/pyp
+    source deactivate
 elif [ $task == "--install-datalad" ]; then
     ok "Install datalad,git-annex and git  into a new conda env and create symlinks in ~/opt/bin"
     desired_symlinks=("git" "git-annex" "datalad")
@@ -550,17 +607,24 @@ elif [ $task == "--install-datalad" ]; then
     printf "${YELLOW}Installed to ~/opt/bin/datalad${UNSET}\n"
     check_opt_bin_in_path
 
+elif [ $task == "--install-htop" ]; then
+    ok "Install htop  into a new conda env and create symlinks in ~/opt/bin"
+    install_env_and_symlink htop htop htop 
+    printf "${YELLOW}Installed to ~/opt/bin/htop${UNSET}\n"
+    check_opt_bin_in_path
+
 
 # ----------------------------------------------------------------------------
 # Diffs section
 
 elif [ $task == "--diffs" ]; then
-    command -v ~/opt/bin/icdiff >/dev/null 2>&1 || {
+    command -v icdiff >/dev/null 2>&1 || {
         printf "${RED}Can't find icdiff. Did you run ./setup.sh --install-icdiff?, and is ~/opt/bin on your \$PATH?${UNSET}\n"
             exit 1;
         }
     ok "Shows the diffs between this repo and what's in your home directory"
-    ~/opt/bin/icdiff --recursive --line-numbers  ~ . | grep -v "Only in $HOME"
+    cmd="icdiff --recursive --line-numbers"
+    $cmd ~ . | grep -v "Only in $HOME" | sed "s|$cmd||g"
 
 elif [ $task == "--graphical-diffs" ]; then
     ok "Opens up meld to display differences between files in this repo and your home directory"

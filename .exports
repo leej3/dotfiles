@@ -25,5 +25,9 @@ fi
 
 
 ### John exports
+if [[ $OSTYPE == darwin* ]]; then
+    export PATH=$PATH:/opt/X11/bin/
+fi
 export DOTFILES_FORCE=true
 export HISTTIMEFORMAT="%s "
+export CMAKE_GENERATOR=Ninja

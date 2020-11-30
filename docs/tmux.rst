@@ -15,41 +15,46 @@ Here are the general features of the ``.tmux.conf`` file:
 
 Here are some shortcuts for window and pane navigation:
 
-=============== =========================
-command         description
-=============== =========================
-``Alt-left``    move to pane on the left
-``Alt-right``   move to pane on the right
-``Alt-up``      move to pane above
-``Alt-down``    move to pane below
-``Shift-left``  move to next window
-``Shift-right`` move to previous window
-=============== =========================
+================ ===========================
+command          description
+================ ===========================
+``Alt-arrows``   move around panes
+``Shift-arrows`` switch windows (left/right)
+================ ===========================
 
 Copy/paste in vim and tmux
 --------------------------
 
-In general, if things seem strange, try adding Shift to copy/paste
+In general, if things seem strange, try adding Shift to select/copy/paste
 commands.
 
 This is by far the most annoying part about using tmux and vim together.
 
-+-----------------------------------------------+-----------+----------+
-| copy method                                   | where     | how to   |
-|                                               | does it   | paste    |
-|                                               | go        |          |
-+===============================================+===========+==========+
-| Shift-select text                             | mid       | sh       |
-|                                               | dle-click | ift-midd |
-|                                               | buffer    | le-click |
-+-----------------------------------------------+-----------+----------+
-| Shift-select text, then Ctrl-shift-C          | clipboard | Ctrl     |
-|                                               |           | -shift-V |
-+-----------------------------------------------+-----------+----------+
-| tmux copy mode (``Ctrl-j``, ``[``). You       | tmux      | ``C      |
-| probably want to avoid using this inside vim  | clipboard | trl-j``, |
-|                                               |           | ``]``    |
-+-----------------------------------------------+-----------+----------+
+.. list-table::
+
+  * - copy method (Linux)
+    - copy method (Mac)
+    - where does it go
+    - how to paste (Linux)
+    - how to paste (Mac)
+  * - shift-select text
+    -
+    - middle-click buffer
+    - :kbd:`shift-middle click`
+    - 
+  * - shift-select text, then Ctrl-shift-C
+    - shift-select text, then Cmd-shift-C
+    - clipboard
+    - ctrl-shift-v
+    - cmd-shift-v
+  * - tmux copy mode (:kbd:`ctrl-j`:kbd:`[`). You probably want to avoid using
+      this inside vim.
+  * - tmux copy mode (:kbd:`ctrl-j`:kbd:`[`). You probably want to avoid using
+      this inside vim.
+    - tmux clipboard
+    - :kbd:`ctrl-j`:kbd:`]`
+    - :kbd:`ctrl-j`:kbd:`]`
+
 
 Another annoying situation is when copying text from the terminal into
 an email. In this case, we cannot use tmux copy mode, because X windows

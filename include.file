@@ -3,6 +3,7 @@
 .bash_prompt
 .bashrc
 .config/nvim/
+.config/nvim/colors/zenburn.vim
 .dircolors
 .exports
 .functions
