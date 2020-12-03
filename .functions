@@ -31,7 +31,7 @@ function tre() {
 sa() {
     local name=$(conda env list | grep -v "#" | fzf)
     local env=$(echo $name | awk '{print $1}');
-    eval "source activate $env";
+    eval "conda activate $env";
 }
 
 

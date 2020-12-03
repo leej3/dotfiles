@@ -1,6 +1,5 @@
 export PATH=$HOME/opt/bin:$PATH
 export PATH=$HOME/opt/neovim/bin:$PATH
-export PATH=$PATH:$HOME/miniconda3/bin
 
 
 ### john paths
