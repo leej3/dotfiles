@@ -25,6 +25,7 @@ Plug 'vim-pandoc/vim-pandoc'              " Required for vim-rmarkdown
 Plug 'vim-pandoc/vim-pandoc-syntax'       " Required for vim-rmarkdown
 Plug 'dhruvasagar/vim-table-mode'         " Very easily make and work with markdown and restructured text tables
 Plug 'tmhedberg/SimpylFold'               " Nice folding for Python
+Plug 'dr-kino/cscope-maps'                " Easy navigation of symbols in C
 call plug#end()
 
 " ============================================================================

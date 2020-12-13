@@ -46,3 +46,11 @@ hhf(){
 hhd(){
        hh $1 | gawk '{ printf strftime("%c", $4); for (i=2; i<NF; i++) printf $i " "; print $NF }'
 }
+
+function build_cscope_db_func() {
+    local PROJDIR=$PWD
+    cd /
+    find $PROJDIR -name \\''*.c\\'' -o -name \\''*.h\\'' > $PROJDIR/cscope.files
+    cd $PROJDIR
+    cscope -Rbkq
+}
