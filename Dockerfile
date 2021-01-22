@@ -19,7 +19,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install tzdata
 
 ADD . dotfiles
 WORKDIR dotfiles
-RUN git checkout $BRANCH
+RUN git checkout leej3
 
 # Run setup in order
 
@@ -27,7 +27,7 @@ ENV DOTFILES_FORCE=true
 RUN ./setup.sh --apt-get-installs-minimal
 RUN ./setup.sh --install-miniconda
 RUN ./setup.sh --dotfiles
-RUN ./setup.sh --set-up-bioconda
+# RUN ./setup.sh --set-up-bioconda
 RUN ./setup.sh --install-neovim
 RUN ./setup.sh --set-up-vim-plugins
 
@@ -52,10 +52,5 @@ RUN ./setup.sh --install-ripgrep
 RUN ./setup.sh --install-tig
 RUN ./setup.sh --install-vd
 
-
-# Additional for this container: asciinema for screen casts
-RUN pip install asciinema
-RUN conda install r-base
-RUN conda install ipython
 
 ENTRYPOINT ["/bin/bash"]
