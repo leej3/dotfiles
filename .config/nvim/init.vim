@@ -130,7 +130,7 @@ inoremap <leader>` <C-o>i```{r}<CR>```<Esc>O
 let @l = "I'A',j"
 
 " Set the working directory to that of the opened file
-autocmd BufEnter * silent! lcd %:p:h
+" autocmd BufEnter * silent! lcd %:p:h
 
 " ----------------------------------------------------------------------------
 " Buffer switching
