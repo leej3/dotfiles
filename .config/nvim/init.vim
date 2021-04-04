@@ -95,7 +95,7 @@ set noswapfile       " disable swap file creation. Keep enabled for huge files
 " ----------------------------------------------------------------------------
 set ignorecase  " ignore case when searching...
 set smartcase   " ...unless at least one character is uppercase
-set nohlsearch  " don't highlight search items by default
+set hlsearch  " don't highlight search items by default
 
 " ----------------------------------------------------------------------------
 " Tab completion settings
