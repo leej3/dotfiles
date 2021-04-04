@@ -132,6 +132,10 @@ let @l = "I'A',j"
 " Set the working directory to that of the opened file
 " autocmd BufEnter * silent! lcd %:p:h
 
+" Add fzf mappings
+nnoremap <silent> <leader>f :FZF<cr>
+nnoremap <silent> <leader>F :FZF ~<cr>
+
 " ----------------------------------------------------------------------------
 " Buffer switching
 " ----------------------------------------------------------------------------
