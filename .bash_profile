@@ -1,8 +1,12 @@
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
-for file in ~/.{bash_prompt,functions,aliases,bashrc}; do
-    [ -r "$file" ] && [ -f "$file" ] && (source "$file"||true);
+for file in ~/.{bash_prompt,functions,bashrc,aliases}; do
+    if [ -r "$file" ] && [ -f "$file" ];then
+        source "$file"||true
+    else
+        echo Cannot find $file
+    fi
 done;
 unset file;
 
@@ -31,3 +35,4 @@ fi
 if [[ $OSTYPE == darwin* ]]; then
     test -f ~/.git-completion.bash && source ~/.git-completion.bash
 fi
+echo .bash_profile sourced
