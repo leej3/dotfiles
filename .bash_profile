@@ -2,7 +2,7 @@
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
 for file in ~/.{bash_prompt,functions,aliases,bashrc}; do
-    [ -r "$file" ] && [ -f "$file" ] && source "$file";
+    [ -r "$file" ] && [ -f "$file" ] && (source "$file"||true);
 done;
 unset file;
 
@@ -17,7 +17,7 @@ for option in autocd globstar; do
 done;
 
 if [ -f /etc/bash_completion ]; then
-    source /etc/bash_completion;
+    source /etc/bash_completion || true
 fi
 
 # makes less work on things like tarballs and images
